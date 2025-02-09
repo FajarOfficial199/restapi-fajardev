@@ -35,7 +35,7 @@ app.use(limiter);
 app.set('views', path.join(__dirname, 'views')); 
 app.set('view engine', 'ejs');
 app.use(expressLayout);
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'secret',  

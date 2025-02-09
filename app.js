@@ -8,6 +8,7 @@ const passport = require('passport');
 const flash = require('connect-flash');
 const MemoryStore = require('memorystore')(session);
 const compression = require('compression');
+const path = require('path');
 
 const apiRouters = require('./routes/api');
 const userRouters = require('./routes/users');

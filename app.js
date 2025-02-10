@@ -105,6 +105,7 @@ app.use(function (req, res, next) {
 
 app.set('json spaces', 4);
 
+app.use(bodyParser.json());
 global.maintance = true
 
 app.use(async (req, res, next) => {

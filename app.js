@@ -9,7 +9,6 @@ const flash = require('connect-flash');
 const MemoryStore = require('memorystore')(session);
 const compression = require('compression');
 const path = require('path');
-const bodyParser = require('body-parser');
 
 const apiRouters = require('./routes/api');
 const userRouters = require('./routes/users');
@@ -105,28 +104,6 @@ app.use(function (req, res, next) {
 });
 
 app.set('json spaces', 4);
-
-app.use(bodyParser.json());
-global.maintance = true
-
-app.use(async (req, res, next) => {
-  if (global.maintance) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(503).send('SORRY, WEB INI SEDANG PENAMBAHAN FITUR');
-    }
-
-    const encoded = authHeader.split(' ')[1];
-    const [username, password] = Buffer.from(encoded, 'base64').toString().split(':');
-
-    const user = await User.findOne({ username, password });
-
-    if (!user) {
-      return res.status(503).send('SORRY, WEB INI SEDANG PENAMBAHAN FITUR');
-    }
-  }
-  next();
-});
 
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);

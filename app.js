@@ -105,6 +105,27 @@ app.use(function (req, res, next) {
 
 app.set('json spaces', 4);
 
+global.maintance = true
+
+app.use(async (req, res, next) => {
+  if (global.maintance) {
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(503).send('SORRY, WEB INI SEDANG PENAMBAHAN FITUR');
+    }
+
+    const encoded = authHeader.split(' ')[1];
+    const [username, password] = Buffer.from(encoded, 'base64').toString().split(':');
+
+    const user = await User.findOne({ username, password });
+
+    if (!user) {
+      return res.status(503).send('SORRY, WEB INI SEDANG PENAMBAHAN FITUR');
+    }
+  }
+  next();
+});
+
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
 });

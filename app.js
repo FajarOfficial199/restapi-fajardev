@@ -9,6 +9,7 @@ const flash = require('connect-flash');
 const MemoryStore = require('memorystore')(session);
 const compression = require('compression');
 const path = require('path');
+const bodyParser = require('body-parser');
 
 const apiRouters = require('./routes/api');
 const userRouters = require('./routes/users');
